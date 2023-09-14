@@ -1,5 +1,5 @@
 float [] a, b, c, catx, caty ;
-float [] v = {1.5, 1.5, 1.5, 0.6};
+float [] v;
 int q = 50 ;
 int w = 300;
 int state = 0;  
@@ -10,6 +10,10 @@ void setup() {
   c = new float[78]; //벽
   catx = new float[5];
   caty = new float[5];
+  v = new float[4];
+  for(int i = 0; i<4;++i){
+    v[i] = random(0.8,1.2);
+  }
   setWall();  
   a[0] = 0;
   catx[0] = 260;
