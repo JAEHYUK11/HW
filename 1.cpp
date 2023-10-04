@@ -27,7 +27,4 @@ int main() {
 		}
 		cout << endl;
 	}
-	for (int n = 0; n < M; n++) { delete[] B[n]; delete C[n]; }
-	delete[] B;
-	delete[] C;  
 }
