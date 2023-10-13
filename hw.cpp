@@ -13,7 +13,7 @@ int main() {
 
     int* sampleRate = (int*)(header + 24);
     cout << "   sampleRate = " << *sampleRate << endl;
-    short* n;   n = (short*)(header + 22) ;  cout << *n << endl; // numChannels
+    short* n;   n = (short*)(header + 22);  cout << *n << endl; // numChannels
     int* fs;   fs = (int*)(header + 24);  cout << *fs << endl; // sampleRate
     int* b;   b = (int*)(header + 28);  cout << *b << endl;  //  byteRate
 
@@ -24,51 +24,50 @@ int main() {
     data = new short[N1];
 
     xx.read((char*)data, N1 * sizeof(short));
-
+    xx.close();
 
     ofstream yy("my.wav", ios::binary | ios::out);
     if (!yy) return 666;
-    yy.write(header, 44 * sizeof(char)); // Çì´õ¸¦ ¾´´Ù. 
-    yy.write((char*)data, N1 * sizeof(short));    // Çì´õ¿¡ ÀÌ¾î¼­ 10ÃÊ ºĞ·® ¾´´Ù.
+    yy.write(header, 44 * sizeof(char)); // í—¤ë”ë¥¼ ì“´ë‹¤. 
+    yy.write((char*)data, N1 * sizeof(short));    // í—¤ë”ì— ì´ì–´ì„œ 10ì´ˆ ë¶„ëŸ‰ ì“´ë‹¤.
     yy.close();
 
 
     // Sprint 4
     *n = 1;
-    *b = n[0] * fs[0] * sizeof(short); //Çì´õ ³»¿ë ¹Ù²Ù±â
+    *b = n[0] * fs[0] * sizeof(short); //í—¤ë” ë‚´ìš© ë°”ê¾¸ê¸°
     cout << "NumChannels = " << *n << endl;
     cout << "ByteRate = " << *b << endl;
     ofstream littlestar("little star.wav", ios::binary | ios::out); //
-    if (!littlestar) return 666;  // ¸¸ÀÏ ÆÄÀÏÀÌ ¿­¸®Áö ¾ÊÀ¸¸é ÇÁ·Î±×·¥À» ³¡³½´Ù. 
-    littlestar.write(header, 44 * sizeof(char)); // littlestar ¿¡ ¼öÁ¤µÈ Çì´õ¾²±â
+    if (!littlestar) return 666;  // ë§Œì¼ íŒŒì¼ì´ ì—´ë¦¬ì§€ ì•Šìœ¼ë©´ í”„ë¡œê·¸ë¨ì„ ëë‚¸ë‹¤. 
+    littlestar.write(header, 44 * sizeof(char)); // littlestar ì— ìˆ˜ì •ëœ í—¤ë”ì“°ê¸°
 
-    ifstream txt("lil star.txt"); // text ÆÄÀÏ¿¡¼­ Á¤º¸ÀĞ±â
+    ifstream txt("lil star.txt"); // text íŒŒì¼ì—ì„œ ì •ë³´ì½ê¸°
     if (!txt) return 232;
     int len;
-    int* A, *T;
+    int* A, * T;
     string* f;
-    txt >> len; //À½Ç¥ °³¼ö
+    txt >> len; //ìŒí‘œ ê°œìˆ˜
     f = new string[len];
     A = new int[len];
     T = new int[len];
 
     for (int i = 0; i < len; ++i) {
         txt >> T[i] >> f[i] >> A[i];
-        sound(T[i],f[i], A[i],fs[0],littlestar);
+        sound(T[i], f[i], A[i], fs[0], littlestar);
     }
-    txt.close();
     littlestar.close();
     return 1;
 }
-void sound(int TT, string ff, int amp, int fs, ofstream&littlestar) {
+void sound(int TT, string ff, int amp, int fs, ofstream& littlestar) {
     int f, a;
     float T;
-    if (ff == "C") f = 261; //µµ
-    else if (ff == "G") f = 392; //¼Ö
-    else if (ff == "A") f = 440; //¶ó
-    else if (ff == "F") f = 349; //ÆÄ
-    else if (ff == "E") f = 329; //¹Ì
-    else if (ff == "D") f = 293; //·¹
+    if (ff == "C") f = 261; //ë„
+    else if (ff == "G") f = 392; //ì†”
+    else if (ff == "A") f = 440; //ë¼
+    else if (ff == "F") f = 349; //íŒŒ
+    else if (ff == "E") f = 329; //ë¯¸
+    else if (ff == "D") f = 293; //ë ˆ
 
     a = amp * 1000;
 
@@ -84,8 +83,8 @@ void sound(int TT, string ff, int amp, int fs, ofstream&littlestar) {
     const float pi = 3.141592;
     int ii = 0;
     for (float t = 0.0; t < T; t += dt, ii++) {
-        data[ii] = (short)(a * sin(2.0 * pi * f * t));   // a ÁøÆø, f ÁÖÆÄ¼ö, N »ùÇÃ¼ö(1ÃÊ´Â fs[0] samples, 44100 ¶Ç´Â 8000)
+        data[ii] = (short)(a * sin(2.0 * pi * f * t));   // a ì§„í­, f ì£¼íŒŒìˆ˜, N ìƒ˜í”Œìˆ˜(1ì´ˆëŠ” fs[0] samples, 44100 ë˜ëŠ” 8000)
     }
-    littlestar.write((char*)data, ii * sizeof(short));     // Çì´õ¿¡ ÀÌ¾î¼­ TÃÊ ºĞ·® ¾´´Ù.
-
+    littlestar.write((char*)data, ii * sizeof(short));     // í—¤ë”ì— ì´ì–´ì„œ Tì´ˆ ë¶„ëŸ‰ ì“´ë‹¤.
+    
 }
