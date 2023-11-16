@@ -4,7 +4,8 @@ LoL::~LoL() {
     delete[] f2d;
 }
 
-void LoL::fileopen(string ss) {
+void LoL::fileopen(string ss) 
+    ofstream dd;
     dd.open(ss, ios::binary | ios::out);
     dd.write((char*)&N1, sizeof(int));
     dd.write((char*)&N2, sizeof(int));
