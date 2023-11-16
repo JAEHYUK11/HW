@@ -9,9 +9,7 @@ public:
         f1(); f2();
     }
     ~LoL();
-    
 
-    ofstream dd;
     void fileopen(string);
 
 private: 
